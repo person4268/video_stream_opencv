@@ -51,7 +51,7 @@
 #include <mutex>
 #include <video_stream_opencv/VideoStreamConfig.h>
 
-#define BACKEND CAP_V4L2
+#define BACKEND cv::CAP_V4L2
 
 namespace fs = boost::filesystem;
 
