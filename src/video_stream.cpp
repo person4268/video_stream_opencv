@@ -51,6 +51,8 @@
 #include <mutex>
 #include <video_stream_opencv/VideoStreamConfig.h>
 
+#define BACKEND CAP_V4L2
+
 namespace fs = boost::filesystem;
 
 namespace video_stream_opencv {
@@ -142,7 +144,7 @@ virtual void do_capture() {
         {
             if (latest_config.loop_videofile)
             {
-                cap->open(video_stream_provider);
+                cap->open(video_stream_provider, BACKEND);
                 cap->set(cv::CAP_PROP_POS_FRAMES, latest_config.start_frame);
                 frame_counter = 0;
                 NODELET_DEBUG("Reached end of frames, looping.");
@@ -235,10 +237,10 @@ virtual void subscribe() {
   try {
     int device_num = std::stoi(video_stream_provider);
     NODELET_INFO_STREAM("Opening VideoCapture with provider: /dev/video" << device_num);
-    cap->open(device_num);
+    cap->open(device_num, BACKEND);
   } catch (std::invalid_argument &ex) {
     NODELET_INFO_STREAM("Opening VideoCapture with provider: " << video_stream_provider);
-    cap->open(video_stream_provider);
+    cap->open(video_stream_provider, BACKEND);
     if(video_stream_provider_type == "videofile" )
       {
         // We can only check the number of frames when we actually open the video file
