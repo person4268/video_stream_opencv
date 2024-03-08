@@ -271,6 +271,8 @@ virtual void subscribe() {
   }
   NODELET_INFO_STREAM("Video stream provider type detected: " << video_stream_provider_type);
 
+  cap->set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M','J','P','G'));
+
   double reported_camera_fps;
   // OpenCV 2.4 returns -1 (instead of a 0 as the spec says) and prompts an error
   // HIGHGUI ERROR: V4L2: Unable to get property <unknown property string>(5) - Invalid argument
